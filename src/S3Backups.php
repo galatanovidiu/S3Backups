@@ -37,7 +37,16 @@ class S3Backups
 
     protected function folderDate(string $folder_basename): \Carbon\Carbon
     {
-        return Carbon::createFromFormat( config('s3-backups.date_format'), $folder_basename); // ! is used to return the time as 00:00:00
+
+        // TODO: translate date to match pattern
+        $match_pattern = '';
+        if(config('s3-backups.date_format') == 'm-d-y'){
+            $match_pattern = '/\d{2}-\d{2}-\d{2}/i';
+        }
+
+        preg_match($match_pattern, $folder_basename, $matched_date);
+
+        return Carbon::createFromFormat( config('s3-backups.date_format'), $matched_date[0]); // ! is used to return the time as 00:00:00
     }
 
     public function uploadFilesToS3(array $should_be_on_s3) :void
@@ -60,7 +69,7 @@ class S3Backups
 
     public function files_that_should_be_on_s3(array $local_folders):array
     {
-        $oldest_backup = Carbon::now()->subMonth();
+        $oldest_backup = Carbon::now()->subDays(config('s3-backups.check_backup_days'));
 
         $should_be_on_s3 = [];
         foreach ($local_folders as $local_folder) {
