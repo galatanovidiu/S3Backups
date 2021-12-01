@@ -1,0 +1,42 @@
+{
+    "name": "galatanovidiu/s3-backups",
+    "description": ":package_description",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Galatan Ovidiu Iulian",
+            "email": "galatanovidiu@gmail.com",
+            "homepage": "http://rogio.biz"
+        }
+    ],
+    "homepage": "https://github.com/galatanovidiu/s3-backups",
+    "keywords": ["Laravel", "S3Backups"],
+    "require": {
+        "illuminate/support": "~7|~8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.0",
+        "orchestra/testbench": "^6.23",
+        "nunomaduro/collision": "^5.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Galatanovidiu\\S3Backups\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Galatanovidiu\\S3Backups\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Galatanovidiu\\S3Backups\\S3BackupsServiceProvider"
+            ],
+            "aliases": {
+                "S3Backups": "Galatanovidiu\\S3Backups\\Facades\\S3Backups"
+            }
+        }
+    }
+}
