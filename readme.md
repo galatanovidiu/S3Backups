@@ -15,6 +15,7 @@ Add to your `.env` file:
 ```dotenv
 LOCAL_BACKUPS_FOLDER='Full path to the folder that contains the backups: /backus/...'
 LOCAL_BACKUPS_FOLDER_DATE_FORMAT='Folder date format: !m-d-y...'
+LOCAL_BACKUPS_FOLDER_DATE_MATCH='Date format match, exmplae: `/\d{2}-\d{2}-\d{2}/i`, this is required to make sure that only mathecd folders are selected'
 LOCAL_BACKUPS_S3_FOLDER='the folder inside the bucket where to store the backups'
 LOCAL_CHECK_BACKUPS_DAYS='number of days to very the backups'
 ```
