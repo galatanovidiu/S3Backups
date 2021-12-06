@@ -3,6 +3,8 @@
 namespace Galatanovidiu\S3Backups;
 
 
+use Carbon\Carbon;
+
 class FilesManager
 {
 
@@ -66,9 +68,16 @@ class FilesManager
     public function lastArchive()
     {
         $newest_file = $this->newestFile();
-        if(is_dir($newest_file)){
+        if(is_dir($newest_file['file'])){
             // Create archive
-            $newest_file = (new ZipFolder($newest_file))->zip();
+            $newest_file_zip = (new ZipFolder($newest_file['file']))->zip();
+            $newest_file = [
+                'file' => $newest_file_zip,
+                'filename' => basename($newest_file_zip),
+                'type' => 'file',
+                'timestamp' => time(),
+                'date' => Carbon::now()->toDateTimeString(),
+            ];
         }
 
         return $newest_file;
