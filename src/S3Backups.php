@@ -25,7 +25,7 @@ class S3Backups
 
     public function saveToS3GlacierStorageClass($file)
     {
-        $response = Storage::disk('s3')->getDriver()->put(env('AWS_S3_FOLDER') . '/' . basename($file), $file, [
+        $response = Storage::disk('s3')->putFileAs(env('AWS_S3_FOLDER'), $file, basename($file) , [
             'StorageClass' => 'GLACIER'
         ]);
 
