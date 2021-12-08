@@ -114,6 +114,8 @@ class S3Backups
 
         ScreenLog::log("The archive Id is: " . $archiveId . "\n");
 
+        ScreenLog::log(["Upload results" => $result]);
+
 
         $backups_log = new \Galatanovidiu\S3Backups\Store('backups_log');
         $backups_log->set(Carbon::now()->toDateTimeString(), ScreenLog::getMessages());
