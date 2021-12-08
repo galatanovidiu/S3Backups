@@ -3,6 +3,7 @@
 namespace Galatanovidiu\S3Backups;
 
 use Aws\Glacier\GlacierClient;
+use Aws\Glacier\MultipartUploader;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
@@ -39,13 +40,17 @@ class S3Backups
             ],
         ));
 
-        $result = $client->uploadArchive(array(
-            'vaultName' => env('GLACIER_S3_VAULT'),
-            'body'      => fopen($file, 'r'),
-        ));
+        $result = new MultipartUploader($client, $file, [
+            'vault_name' => env('GLACIER_S3_VAULT'),
+        ]);
+
+//        $result = $client->uploadArchive(array(
+//            'vaultName' => env('GLACIER_S3_VAULT'),
+//            'body'      => fopen($file, 'r'),
+//        ));
 
         $store = new \Galatanovidiu\S3Backups\Store('backups_log');
-        $store->set(Carbon::now()->toDateTimeString(), $result->toArray());
+        $store->set(Carbon::now()->toDateTimeString(), $result);
         $store->save();
 
         $store = new \Galatanovidiu\S3Backups\Store('backups_data');
