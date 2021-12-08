@@ -25,9 +25,11 @@ class S3Backups
 
     public function saveToS3GlacierStorageClass($file)
     {
-        Storage::disk('s3')->getDriver()->put(env('AWS_S3_FOLDER') . '/' . basename($file), $file, [
+        $response = Storage::disk('s3')->getDriver()->put(env('AWS_S3_FOLDER') . '/' . basename($file), $file, [
             'StorageClass' => 'GLACIER'
         ]);
+
+        ScreenLog::log($response);
 
         $backups_data = new \Galatanovidiu\S3Backups\Store('backups_data');
         $backups_data->set('last_backup', basename($file));
