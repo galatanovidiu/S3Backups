@@ -10,11 +10,11 @@ class Store
 
     private array $store;
     private string $file_path;
+    private string $store_name;
 
-    public function __construct(
-        public string $store_name
-    )
+    public function __construct( $store_name )
     {
+        $this->store_name = $store_name;
         $file_name = Str::snake($this->store_name);
         $this->file_path = storage_path('framework/store/' . $file_name . '.json');
         if(File::exists($this->file_path)) {

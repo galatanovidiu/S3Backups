@@ -8,11 +8,11 @@ class ZipFolder
     private $zip_file_name;
     private $folder_name;
     private $parent_folder;
+    private $folder;
 
-    public function __construct(
-        public string $folder
-    )
+    public function __construct( $folder )
     {
+        $this->folder = $folder;
         $this->folderName();
         $this->parentFolder();
         $this->zipFileName();

@@ -9,11 +9,11 @@ class FilesManager
 {
 
     private $folder_files;
+    private $folder;
 
-    public function __construct(
-        public string $folder
-    )
+    public function __construct( $folder )
     {
+        $this->folder = $folder;
         if(!file_exists($this->folder) or !is_dir($this->folder)){
             throw new \Exception($this->folder . ' does not exists or is not a folder');
         }
@@ -24,6 +24,7 @@ class FilesManager
         }
 
         $this->folder_files = $this->folderFiles();
+        $this->folder = $folder;
     }
 
     /*
